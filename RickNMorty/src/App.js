@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Episodes from "./Pages/Episodes";
 import CardDetails from "./components/Card/CardDetails";
+import Favorites from "./Pages/Favorites";
 
 function App() {
   return (
@@ -24,6 +25,8 @@ function App() {
 
         <Route path="/episodes" element={<Episodes />} />
         <Route path="/episodes/:id" element={<CardDetails />} />
+        <Route path="/favorites" element={<Favorites />} />
+
       </Routes>
     </Router>
   );

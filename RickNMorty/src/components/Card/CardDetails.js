@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { FaBookmark } from "react-icons/fa6";
 
 const CardDetails = () => {
   let { id } = useParams();
@@ -24,9 +25,9 @@ const CardDetails = () => {
         <img className="img-fluid" src={image} alt="" />
         {(() => {
           if (status === "Dead") {
-            return <div className="badge bg-danger fs-5">{status}</div>;
+            return <div className="badge bg-danger fs-5"><FaBookmark color="black"/></div>;
           } else if (status === "Alive") {
-            return <div className=" badge bg-success fs-5">{status}</div>;
+            return <div className=" badge bg-success fs-4 "><FaBookmark color="white"/></div>;
           } else {
             return <div className="badge bg-secondary fs-5">{status}</div>;
           }

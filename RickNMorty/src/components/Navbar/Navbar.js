@@ -33,14 +33,16 @@ const Navbar = () => {
           className="collapse navbar-collapse justify-content-end"
           id="navbarNavAltMarkup"
         >
-          <div className="navbar-nav fs-5">
+          <div className="navbar-nav fs-4">
             <NavLink to="/" className="nav-link">
               Characters
             </NavLink>
             <NavLink to="/episodes" className="nav-link">
-              Episode
+              Episodes
             </NavLink>
-            
+            <NavLink to="/favorites" className="nav-link">
+              Favorites
+            </NavLink>
           </div>
         </div>
       </div>

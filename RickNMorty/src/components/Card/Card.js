@@ -1,16 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Card.module.scss";
 import CardDetails from "./CardDetails";
+import { IoBookmark } from "react-icons/io5";
+import { IoBookmarkOutline } from "react-icons/io5";
 
 const Card = ({ page, results }) => {
-  let display;
+  const [savedItems, setSavedItems] = useState(() => {
+    const savedItemsFromStorage = localStorage.getItem("savedItems");
+    return savedItemsFromStorage ? JSON.parse(savedItemsFromStorage) : [];  });
+    
+    const handleSave = (id) => {
+      const alreadySaved = savedItems.includes(id);
+      const updatedSavedItems = alreadySaved
+        ? savedItems.filter((savedId) => savedId !== id)
+        : [...savedItems, id];
+      setSavedItems(updatedSavedItems);
+    };
+    
+    useEffect(() => {
+      localStorage.setItem("savedItems", JSON.stringify(savedItems));
+    }, [savedItems]);
+  
+    let display;
 
   if (results) {
     display = results.map((x) => {
       let { id, image, name, status, location } = x;
+      const isSaved = savedItems.includes(id);
+    
 
       return (
+        <div
+          key={id}
+          className="col-lg-4 col-md-6 col-sm-6 col-12 mb-4 position-relative "
+        >
         <Link
           style={{ textDecoration: "none" }}
           to={`${page}${id}`}
@@ -29,35 +53,16 @@ const Card = ({ page, results }) => {
               </div>
             </div>
           </div>
-
-          {(() => {
-            if (status === "Dead") {
-              return (
-                <div
-                  className={`${styles.badge} position-absolute badge bg-danger`}
-                >
-                  {status}
-                </div>
-              );
-            } else if (status === "Alive") {
-              return (
-                <div
-                  className={`${styles.badge} position-absolute badge bg-success`}
-                >
-                  {status}
-                </div>
-              );
-            } else {
-              return (
-                <div
-                  className={`${styles.badge} position-absolute badge bg-secondary`}
-                >
-                  {status}
-                </div>
-              );
-            }
-          })()}
         </Link>
+        
+        <button
+            className={`${styles.badge} position-absolute badge `}
+            onClick={() => handleSave(id)}
+          >
+                        {isSaved ? <IoBookmark /> : <IoBookmarkOutline />}
+  
+          </button>
+        </div>
       );
     });
   } else {
